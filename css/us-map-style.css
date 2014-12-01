@@ -1,0 +1,146 @@
+rect {
+  fill: none;
+  pointer-events: all;
+}
+
+.state {
+  fill: #ccc;
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.feature.active {
+  fill: orange;
+}
+
+.mesh {
+  fill: none;
+  stroke: #fff;
+  stroke-width: .5px;
+  stroke-linejoin: round;
+}
+
+.state { 
+	stroke: white;
+	stroke-width: 1.5;
+	fill: #5c8eb4;
+}
+
+.tooltip
+  {
+    position: absolute;
+    width: 235px;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    border-radius: 15px;
+    opacity: 0;
+  }
+
+.numbertip
+  {
+    position: absolute;
+    width: 35px;
+    height auto;
+    padding: 10px;
+    background-color: white;
+    /*-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0px 0x 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);*/
+    pointer-events: none;
+    opacity: 0;
+  }
+
+.ranktip
+  {
+    position: absolute;
+    width: 25px;
+    height auto;
+    padding: 10px;
+    background-color: white;
+    /*-webkit-box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0px 0x 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.4);*/
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  #state-name
+  {
+    padding-bottom: 5px;
+    margin-bottom: -7px;
+  }
+
+  #namen
+  {
+    font-family: "neutra-2-text-1";
+    font-size: 18px;
+    padding-bottom: 13px;
+
+  }
+
+  #name, #namen
+  {
+    font-family: "neutra-2-text-1";
+    font-weight: bold;
+
+    font-size: 15px;
+    padding-bottom: 13px;
+    padding-right: 35px;
+  }
+
+
+
+   #calls, #treatment, #prevention, 
+   #callsn, #treatmentn, #preventionn,
+   #callsr, #treatmentr, #preventionr
+  {
+    font-family: "neutra-2-text-1";
+    font-size: 13px;
+    padding-bottom: 13px;
+    font-weight: bold;
+  
+    border-width: 5px;
+    margin-left: 8px;
+  }
+
+    #namer
+  {
+    font-family: "neutra-2-text-1";
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    padding-bottom: 13px;
+    padding-right: 35px;
+  }
+
+  .left {float: left; color: white; padding-left: 10px; padding-top: 5px;}
+  .right {float: right; color: white; padding-right: 10px; padding-top: 5px;}
+
+  .col  { padding-bottom: 10px; padding-top: 8px; font-size: 14px; font-family: "neutra-2-text-1", sans-serif; }
+  .col2  { padding-right: 20px; }
+
+  .col, .col2, .col3 {
+    padding-top: 4px;
+    vertical-align: top !important;
+  }
+
+  .col2, .col3, .brew_tip span{ font-size: 14px; font-weight: 800; font-family: "neutra-2-display-1", sans-serif;}
+
+  .rank { font-size: 12px !important; }
+
+  .col3 {text-align: right;}
+
+  .tr { border-top: 1px solid gray; padding-bottom: 5px; }
+  tr.no_top {border-top: none; }
+
+
+    .brew_tip {font-size: 14px; font-family: "neutra-2-text-1", sans-serif;  }
+    .hidden { display: none;}
+    .hover_on { background-color: #0000ff;}
+    a { color: black;}
+    a:visited { color: black;}
