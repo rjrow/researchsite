@@ -31,6 +31,7 @@ get_header(); ?>
 	});
      </script>
 
+     
 <script type="text/javascript" src="../js/table_enhancement.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/hide_selects.js"></script>
 
@@ -85,6 +86,7 @@ get_header(); ?>
 				<select name = "arealist" class = "arealist" onchange = "this.form.submit()">
 					<?PHP
 						$value=$_POST ["arealist"];
+						$value_area = $_POST ["arealist"];
 
 						$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
 						$fetch_state_name = $newdb->get_results('SELECT DISTINCT state_name FROM state_rankings ORDER BY state_name ASC;');
@@ -117,21 +119,34 @@ get_header(); ?>
 				</td>
 		</tr>
 
+		<?PHP
+			$option_group = explode('[', $value_area);
+			$area_selected = explode(']', $option_group[1]);
+		?>
+
 		<tr class = "row_industry">
 			<td> Industry: </td>
 			<td>
 			<select name = "industrylist" class = "industrylist" onchange = "this.form.submit()">
 			<?php
 			    $value=$_POST["industrylist"];
+			    $table_name = '';
 
-				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
-				$fetch_industry_name = $newdb->get_results('SELECT DISTINCT supersector_name FROM state_rankings ORDER BY supersector_name ASC;');
+			    $newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
 
+			    if($option_group[0] == 'States'){
+			    	$state_query = 'SELECT DISTINCT industry_name FROM state_rankings WHERE state_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
+			    	$fetch_industry_name = $newdb->get_results($state_query);
+			    }else if($option_group[0] == 'MSAs'){
+			    	$MSA_query = 'SELECT DISTINCT industry_name FROM msa_rankings WHERE area_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
+			    	$fetch_industry_name = $newdb->get_results($MSA_query);
+			    }
+			    			    
 				if(!empty($fetch_industry_name)) :
 			    /** Loop through the $results and add each as a dropdown option */
 			    	$options = '';
 			    	foreach($fetch_industry_name as $result) :
-			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->supersector_name);
+			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->industry_name);
 			    	endforeach;
 			    	/** Output the dropdown */
 			    	echo $options;

@@ -10,6 +10,8 @@ get_header(); ?>
 
 	<?php $wp_query = $backup_wp_query; ?>
 
+<link  rel="stylesheet" href="http://research.wpcarey.asu.edu/seidman/wp-content/themes/Avada/js/c3/c3.css" type="text/css"/>
+
 <style type="text/css">
 .background {
   fill: none;
@@ -35,16 +37,144 @@ get_header(); ?>
 
 </style>
 
-
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://d3js.org/topojson.v1.min.js"></script>
+
+<script src="<?php bloginfo('template_url');?>/js/underscore.js"></script>
+<script src="<?php bloginfo('template_url');?>/js/c3/c3.min.js"></script>
 <script src="<?php bloginfo('template_url');?>/js/datamaps.usa.js"></script>
-
-<div id="container" style="position: relative; width: 800px; height: 1200px; margin:0 auto;"></div>
-
+<script src="<?php bloginfo('template_url');?>/js/miso.ds.0.4.1.js"></script>
 
 
+	<div id = "form_list">
+		<table>
 
+		<tr class = "row_industry">
+			<td> Industry: </td>
+			<td>
+			<select name = "industrylist" class = "industrylist" onchange = "updateIndustry(this.value)">
+			<?php
+			    $value=$_POST["industrylist"];
+
+				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
+				$fetch_industry_name = $newdb->get_results('SELECT DISTINCT supersector_name FROM state_rankings ORDER BY supersector_name ASC;');
+
+				if(!empty($fetch_industry_name)) :
+			    /** Loop through the $results and add each as a dropdown option */
+			    	$options = '';
+			    	foreach($fetch_industry_name as $result) :
+			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->supersector_name);
+			    	endforeach;
+			    	/** Output the dropdown */
+			    	echo $options;
+				    echo '</select>'."\n\n";
+					endif;
+				?>
+			</td>
+		</tr>
+		</table>
+
+
+<div id="container" style="position: relative; width: 800px; height: 400px; margin:0 auto;"></div>
+<div id="chart5" ></div>
+
+<script>
+
+
+function updateIndustry(value)
+{
+	d3.json("<?php bloginfo('template_url');?>/data/current_base_states.json", function(error, csvdata1)
+	{
+		json = csvdata1;
+		console.log(json);
+		json_select = json[value];
+		map.updateChoropleth(json_select);
+	});
+}
+
+
+
+
+//Function used to build hierarchies with
+function genJSON(csvData, groups) {
+
+  var genGroups = function (data) {
+    return _.map(data, function(element, index) {
+      return { name : index, children : element };
+    });
+  };
+
+  var nest = function (node, curIndex) {
+    if (curIndex === 0) {
+      node.children = genGroups(_.groupBy(csvData, groups[0]));
+      _.each(node.children, function (child) {
+        nest(child, curIndex + 1);
+      });
+    }
+    else {
+      if (curIndex < groups.length) {
+        node.children = genGroups(
+          _.groupBy(node.children, groups[curIndex])
+        );
+        _.each(node.children, function (child) {
+          nest(child, curIndex + 1);
+        });
+      }
+    }
+    return node;
+  };
+  return nest({}, 0);
+}
+// Load in dataset with new dataset library for javascript
+
+var data;
+
+var map = new Datamap({
+    element: document.getElementById('container'),
+    scope: 'usa',
+    data: {},
+    fills : {
+
+                '1-10': '#0B486B',
+                '11-20': '#3B8686',
+                '21-30': '#79BD9A',
+                '31-40': '#A8DBA8',
+                '41-50': '#CFF09E',
+                defaultFill: 'grey'},
+    geographyConfig: {
+            popupTemplate: function(geo, data) {
+                if ( !data ) return;
+                return '<div class = "hoverinfo" ><strong>' +
+                          '<p style = "text-align:center; font-weight: bolder; text-decoration: underline;">' +
+                          geo.properties.name + '</p>' +
+                         'Rank: ' + data.rank + '<br>' +
+                         'Jobs: ' + data.jobs + '<br>' +
+                         'Job Growth: ' + data.job_growth +
+                    '</strong></div>';
+            }, highlightBorderWidth : 3
+        }
+});
+map.legend();
+
+
+	d3.json("<?php bloginfo('template_url');?>/data/current_base_states.json", function(error, csvdata1)
+	{
+		json = csvdata1;
+		json_select = json['Total Nonfarm'];
+		map.updateChoropleth(json_select);
+	});
+
+
+	d3.json("<?php bloginfo('template_url');?>/data/current_base_states_ts.json", function(error, csvdata1)
+	{
+		json = csvdata1;
+		console.log(json['2014']['1']['Construction']);
+	});
+
+
+</script>
+<br></br>
+<br></br>
 
 	<?php
 
