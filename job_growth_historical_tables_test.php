@@ -13,31 +13,81 @@ get_header(); ?>
 
 
 	$DB_USER = DB_USER_jg;
-
 	$DB_PASS = DB_PASS_jg;
-
 	$DB_NAME = DB_NAME_jg;
-
 	$DB_HOST = DB_HOST_jg;
 
 	$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST); ?>
 
-	  <script>
+<!-- -->
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
+	 <script type = "text/javascript">
+
+		jQuery(document).ready(function($) {
+
+	 	alert('JQuery loaded');
+	    // We'll pass this variable to the PHP function example_ajax_request
+	    var fruit = 'Banana';
+	    //var ajaxurl_1 = '<?php echo admin_url('admin-ajax.php'); ?>';
+
+	    // This does the ajax request
+	    $.ajax({
+	        url: "<?php echo admin_url('admin-ajax.php'); ?>",
+	        data: {
+	            'action':'example_ajax_request',
+	            'fruit' : fruit
+	        },
+	        success:function(data) {
+	            // This outputs the result of the ajax request
+	            alert(data);
+	            console.log(data);
+	        },
+	        error: function(errorThrown){
+	        	alert('error');
+	            console.log(errorThrown);
+	        }
+	    });
+
+	});
+
+	</script>
+
+
+
+	<!-- -->
+
+	  <script type = "text/javascript">
 
        $(function(){
 
 	  $("#radio").buttonset();
 
 	});
+
+       function checkMonthChange(){
+       		if(document.getElementById('mom').checked) {
+
+			}else if(document.getElementById('yoy').checked) {
+
+			}else if(document.getElementById('ann').checked) {
+
+			}else{
+				alert(' Please select a metric from the following: 1 month change, 12 month change, 12 mos moving average');
+			}
+
+       }
+
      </script>
 
-     
+
 <script type="text/javascript" src="../js/table_enhancement.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/hide_selects.js"></script>
 
+
 	<form class = "action_form" method = "POST">
 	<div id = "radio">
-
+		<span id = "radio_span">
 		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?>  onchange = "this.form.submit()">
 
 		<label for ="mom">1 month change</label>
@@ -49,7 +99,7 @@ get_header(); ?>
 		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?>  onchange = "this.form.submit()">
 
 		<label for ="ann">12 mos moving average</label>
-
+		</span>
 	</div>
 
 	<br></br>
@@ -83,7 +133,7 @@ get_header(); ?>
 			<tr class = "row_area">
 				<td> Area: </td>
 				<td id = "arealist">
-				<select name = "arealist" class = "arealist" onchange = "this.form.submit()">
+				<select name = "arealist" class = "arealist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
 					<?PHP
 						$value=$_POST ["arealist"];
 						$value_area = $_POST ["arealist"];
@@ -127,7 +177,7 @@ get_header(); ?>
 		<tr class = "row_industry">
 			<td> Industry: </td>
 			<td>
-			<select name = "industrylist" class = "industrylist" onchange = "this.form.submit()">
+			<select name = "industrylist" class = "industrylist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
 			<?php
 			    $value=$_POST["industrylist"];
 			    $table_name = '';
@@ -141,7 +191,7 @@ get_header(); ?>
 			    	$MSA_query = 'SELECT DISTINCT industry_name FROM msa_rankings WHERE area_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
 			    	$fetch_industry_name = $newdb->get_results($MSA_query);
 			    }
-			    			    
+
 				if(!empty($fetch_industry_name)) :
 			    /** Loop through the $results and add each as a dropdown option */
 			    	$options = '';
@@ -159,7 +209,7 @@ get_header(); ?>
 		<tr class = "row_month">
 			<td> Month: </td>
 			<td>
-			<select name = "monthlist" class = "monthlist" onchange = "this.form.submit()">
+			<select name = "monthlist" class = "monthlist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
 			<?php
 			    $value=$_POST["monthlist"];
 

@@ -10,14 +10,6 @@ get_header(); ?>
 
 	<?php $wp_query = $backup_wp_query; ?>
 
-
-
-
-
-
-
-
-
   <script>
 
        $(function(){

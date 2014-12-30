@@ -15,6 +15,20 @@ $DB_HOST = DB_HOST_jg;
 
 wp_enqueue_script("jquery");
 
+
+
+function testajax()
+{
+	$test = "test";
+	echo $test;
+	die();
+}
+add_action('wp_ajax_nopriv_testajax','testajax');
+
+
+
+
+
 add_action( 'wp_ajax_nopriv_areaSelectPopulate', 'areaSelectPopulate' );
 add_action('wp_ajax_areaSelectPopulate', 'areaSelectPopulate');
 

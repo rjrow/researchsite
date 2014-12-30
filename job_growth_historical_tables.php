@@ -21,34 +21,41 @@ get_header(); ?>
 	$DB_HOST = DB_HOST_jg;
 
 	$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST); ?>
-
-	  <script>
-
+	  <script type = "text/javascript">
        $(function(){
-
 	  $("#radio").buttonset();
-
 	});
+
+       function checkMonthChange(){
+       		if(document.getElementById('mom').checked) {
+			}else if(document.getElementById('yoy').checked) {
+			}else if(document.getElementById('ann').checked) {
+			}else{
+				alert(' Please select a metric');
+			}
+       }
+
      </script>
+
 
 <script type="text/javascript" src="../js/table_enhancement.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/hide_selects.js"></script>
 
 	<form class = "action_form" method = "POST">
 	<div id = "radio">
-
-		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?>  onchange = "this.form.submit()">
+		<span id = "radio_span">
+		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?>>
 
 		<label for ="mom">1 month change</label>
 
-		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?>  onchange = "this.form.submit()">
+		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?>>
 
 		<label for ="yoy">12 month change</label>
 
-		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?>  onchange = "this.form.submit()">
+		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?>>
 
 		<label for ="ann">12 mos moving average</label>
-
+		</span>
 	</div>
 
 	<br></br>
@@ -82,9 +89,10 @@ get_header(); ?>
 			<tr class = "row_area">
 				<td> Area: </td>
 				<td id = "arealist">
-				<select name = "arealist" class = "arealist" onchange = "this.form.submit()">
+				<select name = "arealist" class = "arealist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
 					<?PHP
 						$value=$_POST ["arealist"];
+						$value_area = $_POST ["arealist"];
 
 						$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
 						$fetch_state_name = $newdb->get_results('SELECT DISTINCT state_name FROM state_rankings ORDER BY state_name ASC;');
@@ -117,21 +125,34 @@ get_header(); ?>
 				</td>
 		</tr>
 
+		<?PHP
+			$option_group = explode('[', $value_area);
+			$area_selected = explode(']', $option_group[1]);
+		?>
+
 		<tr class = "row_industry">
 			<td> Industry: </td>
 			<td>
-			<select name = "industrylist" class = "industrylist" onchange = "this.form.submit()">
+			<select name = "industrylist" class = "industrylist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
 			<?php
 			    $value=$_POST["industrylist"];
+			    $table_name = '';
 
-				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
-				$fetch_industry_name = $newdb->get_results('SELECT DISTINCT supersector_name FROM state_rankings ORDER BY supersector_name ASC;');
+			    $newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
+
+			    if($option_group[0] == 'States'){
+			    	$state_query = 'SELECT DISTINCT industry_name FROM state_rankings WHERE state_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
+			    	$fetch_industry_name = $newdb->get_results($state_query);
+			    }else if($option_group[0] == 'MSAs'){
+			    	$MSA_query = 'SELECT DISTINCT industry_name FROM msa_rankings WHERE area_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
+			    	$fetch_industry_name = $newdb->get_results($MSA_query);
+			    }
 
 				if(!empty($fetch_industry_name)) :
 			    /** Loop through the $results and add each as a dropdown option */
 			    	$options = '';
 			    	foreach($fetch_industry_name as $result) :
-			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->supersector_name);
+			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->industry_name);
 			    	endforeach;
 			    	/** Output the dropdown */
 			    	echo $options;
@@ -144,7 +165,7 @@ get_header(); ?>
 		<tr class = "row_month">
 			<td> Month: </td>
 			<td>
-			<select name = "monthlist" class = "monthlist" onchange = "this.form.submit()">
+			<select name = "monthlist" class = "monthlist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
 			<?php
 			    $value=$_POST["monthlist"];
 
