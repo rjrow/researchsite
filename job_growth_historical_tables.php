@@ -13,11 +13,8 @@ get_header(); ?>
 
 
 	$DB_USER = DB_USER_jg;
-
 	$DB_PASS = DB_PASS_jg;
-
 	$DB_NAME = DB_NAME_jg;
-
 	$DB_HOST = DB_HOST_jg;
 
 	$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST); ?>
@@ -38,7 +35,6 @@ get_header(); ?>
      </script>
 
 
-<script type="text/javascript" src="../js/table_enhancement.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/hide_selects.js"></script>
 
 	<form class = "action_form" method = "POST">
@@ -91,6 +87,9 @@ get_header(); ?>
 				<td id = "arealist">
 				<select name = "arealist" class = "arealist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
 					<?PHP
+
+
+
 						$value=$_POST ["arealist"];
 						$value_area = $_POST ["arealist"];
 
@@ -135,11 +134,18 @@ get_header(); ?>
 			<td>
 			<select name = "industrylist" class = "industrylist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
 			<?php
+
+				$file_location = "http://research.wpcarey.asu.edu/seidman/wp-content/themes/Avada/data/areas.json";
+				$json_data = file_get_contents($file_location);
+				$json_data = json_decode($json_data, true);
+
 			    $value=$_POST["industrylist"];
 			    $table_name = '';
 
 			    $newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
+			    $fetch_industry_name = $json_data[$area_selected[0]];
 
+/*
 			    if($option_group[0] == 'States'){
 			    	$state_query = 'SELECT DISTINCT industry_name FROM state_rankings WHERE state_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
 			    	$fetch_industry_name = $newdb->get_results($state_query);
@@ -147,17 +153,21 @@ get_header(); ?>
 			    	$MSA_query = 'SELECT DISTINCT industry_name FROM msa_rankings WHERE area_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
 			    	$fetch_industry_name = $newdb->get_results($MSA_query);
 			    }
+*/
 
 				if(!empty($fetch_industry_name)) :
 			    /** Loop through the $results and add each as a dropdown option */
 			    	$options = '';
 			    	foreach($fetch_industry_name as $result) :
-			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->industry_name);
+			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result);
 			    	endforeach;
 			    	/** Output the dropdown */
 			    	echo $options;
 				    echo '</select>'."\n\n";
 					endif;
+
+
+
 				?>
 			</td>
 		</tr>

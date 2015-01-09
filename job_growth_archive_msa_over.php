@@ -103,419 +103,84 @@ get_header(); ?>
 
 		<td align = "left">
 
-	<select name = "job_sector"  id = "job_select" onchange="this.form.submit()">
-
-			<option value = "Total Nonfarm" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Total Nonfarm')
-
-					echo ' selected="selected"';?> > Total Nonfarm </option>
-
-
-
-			<option value =  "Total Private" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Total Private')
-
-					echo ' selected="selected"';?>> Total Private</option>
-
-
-
-			<option value =  "Goods Producing" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Goods Producing')
-
-					echo ' selected="selected"';?>> Goods Producing</option>
-
-
-
-			<option value =  "Service-Providing" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Service-Providing')
-
-					echo ' selected="selected"';?>> Service-Providing</option>
-
-
-			<option value =  "Private Service Providing" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Private Service Providing')
-
-					echo ' selected="selected"';?>>Private Service Providing</option>
-
-
-
-			<option value =  "Mining, Logging, and Construction" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Mining, Logging, and Construction')
-
-					echo ' selected="selected"';?>>Mining, Logging, and Construction</option>
-
-
-
-			<option value =  "Construction" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Construction')
-
-					echo ' selected="selected"';?>>Construction</option>
-
-
-
-			<option value =  "Mining" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Mining')
-
-					echo ' selected="selected"';?>>Mining</option>
-
-
-
-			<option value =  "Manufacturing" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Manufacturing')
-
-					echo ' selected="selected"';?>> Manufacturing</option>
-
-
-
-			<option value =  "Durable Goods" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Durable Goods')
-
-					echo ' selected="selected"';?>>Durable Goods</option>
-
-
-
-			<option value =  "Non-Durable Goods" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Non-Durable Goods')
-
-					echo ' selected="selected"';?>>Non-Durable Goods</option>
-
-
-
-			<option value =  "Trade, Transportation, and Utilities" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Trade, Transportation, and Utilities')
-
-					echo ' selected="selected"';?>>Trade-Transportation-Utilities</option>
-
-
-
-			<option value =  "Wholesale Trade" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Wholesale Trade')
-
-					echo ' selected="selected"';?>>Wholesale Trade</option>
-
-
-
-			<option value =  "Retail Trade" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Retail Trade')
-
-					echo ' selected="selected"';?>>Retail Trade</option>
-
-
-
-			<option value =  "Transportation and Utilities" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Transportation and Utilities')
-
-					echo ' selected="selected"';?>>Transportation and Utilities</option>
-
-
-
-			<option value =  "Utilities" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Utilities')
-
-					echo ' selected="selected"';?>>Utilities</option>
-
-
-
-			<option value =  "Transportation and Warehousing" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Transportation and Warehousing')
-
-					echo ' selected="selected"';?>>Transportation and Warehousing</option>
-
-
-
-			<option value =  "Information" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Information')
-
-					echo ' selected="selected"';?>> Information</option>
-
-
-
-			<option value =  "Financial Activities" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Financial Activities')
-
-					echo ' selected="selected"';?>> Financial Activities</option>
-
-
-
-			<option value =  "Finance and Insurance" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Finance and Insurance')
-
-					echo ' selected="selected"';?>>Finance and Insurance</option>
-
-
-
-			<option value =  "Real Estate and Rental and Leasing" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Real Estate and Rental and Leasing')
-
-					echo ' selected="selected"';?>>Real Estate and Rental and Leasing</option>
-
-
-
-			<option value =  "Professional and Business Services" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Professional and Business Services')
-
-					echo ' selected="selected"';?>> Professional and Business Services</option>
-
-
-
-			<option value =  "Professional, Scientific, and Technical Services" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Professional, Scientific, and Technical Services')
-
-					echo ' selected="selected"';?>>Professional, Scientific, and Technical Services</option>
-
-
-
-			<option value =  "Administrative and Support and Waste Management and Remediation Services" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Administrative and Support and Waste Management and Remediation Services')
-
-					echo ' selected="selected"';?>>Administrative and Support and Waste Management and Remediation Services</option>
-
-
-
-			<option value =  "Management of Companies and Enterprises" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Management of Companies and Enterprises')
-
-					echo ' selected="selected"';?>>Management of Companies and Enterprises</option>
-
-
-
-			<option value =  "Education and Health Services" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Education and Health Services')
-
-					echo ' selected="selected"';?>> Education and Health Services</option>
-
-
-			<option value =  "Ambulatory Health Care Services" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Ambulatory Health Care Services')
-					echo ' selected="selected"';?>>Ambulatory Health Care Services</option>
-
-			<option value =  "Hospitals" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Hospitals')
-					echo ' selected="selected"';?>>Hospitals</option>
-
-
-			<option value =  "Nursing and Residential Care Facilities" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Nursing and Residential Care Facilities')
-					echo ' selected="selected"';?>>Nursing and Residential Care Facilities</option>
-
-
-			<option value =  "Educational Services" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Educational Services')
-
-					echo ' selected="selected"';?>>Educational Services</option>
-
-
-
-			<option value =  "Health Care and Social Assistance" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Health Care and Social Assistance')
-
-					echo ' selected="selected"';?>>Health Care and Social Assistance</option>
-
-
-
-			<option value =  "Leisure and Hospitality" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Leisure and Hospitality')
-
-					echo ' selected="selected"';?>> Leisure and Hospitality</option>
-
-
-
-			<option value =  "Accommodation and Food Services"<?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Accommodation and Food Services')
-
-					echo ' selected="selected"';?>> Accommodation and Food Services</option>
-
-
-
-			<option value =  "Food Services and Drinking Places"<?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Food Services and Drinking Places')
-
-					echo ' selected="selected"';?>> Food Services and Drinking Places</option>
-
-
-
-
-			<option value =  "Arts, Entertainment, and Recreation"<?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Arts, Entertainment, and Recreation')
-
-					echo ' selected="selected"';?>>Arts, Entertainment, and Recreation</option>
-
-
-
-			<option value =  "Other Services" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Other Services')
-
-					echo ' selected="selected"';?>>Other Services</option>
-
-
-
-			<option value =  "Government" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Government')
-
-					echo ' selected="selected"';?>>Government</option>
-
-
-
-			<option value =  "Federal Government" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Federal Government')
-
-					echo ' selected="selected"';?>>Federal Government</option>
-
-
-
-			<option value =  "State Government" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'State Government')
-
-					echo ' selected="selected"';?>>State Government</option>
-
-
-
-			<option value =  "Local Government" <?php if(isset($_POST['job_sector']) && $_POST['job_sector'] == 'Local Government')
-
-					echo ' selected="selected"';?>>Local Government</option>
-
+		<select name = "job_sector"  id = "job_select" onchange="this.form.submit()" class = "industrylist">
+
+			<?php
+			    $value=$_POST["job_sector"];
+			    $table_name = '';
+
+			    $newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
+
+			    	$state_query = 'SELECT DISTINCT industry_name FROM state_rankings WHERE state_name = "Arizona" ORDER BY industry_name ASC;';
+			    	$fetch_industry_name = $newdb->get_results($state_query);
+
+				if(!empty($fetch_industry_name)) :
+			    /** Loop through the $results and add each as a dropdown option */
+			    	$options = '';
+			    	foreach($fetch_industry_name as $result) :
+			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->industry_name);
+			    	endforeach;
+			    	/** Output the dropdown */
+			    	echo $options;
+				    echo '</select>'."\n\n";
+					endif;
+				?>
 		</select>
-
 		</td>
-
 		</tr>
 
 
 
 		<tr>
-
 		<td  class = "Month_id_field" align = "right">Month:</td>
-
 		<td  class = "Month_id_field" align = "left">
+		<select name = "Month" id = "Month" onchange="this.form.submit()" class = "monthlist">
+			<?php
 
-		<select name = "Month" id = "Month" onchange="this.form.submit()">
+				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
+				$fetch_year_name = $newdb->get_results('SELECT DISTINCT CAST(Month AS UNSIGNED) AS Month FROM state_rankings ORDER BY CAST(Month AS UNSIGNED) ASC;');
 
-			<option value = "1" <?php if(isset($_POST['Month']) && $_POST['Month'] == '1')
+				if(!empty($fetch_year_name)) :
+			    /** Loop through the $results and add each as a dropdown option */
+			    	$options = '';
+			    	foreach($fetch_year_name as $result) :
+						$Month = $result->Month;
+						$MonthName = date("F",mktime(0,0,0,$Month,date("d"),date("y")));
+			    		$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $MonthName);
 
-					echo ' selected="selected"';?>>January</option>
-
-			<option value = "2" <?php if(isset($_POST['Month']) && $_POST['Month'] == '2')
-
-					echo ' selected="selected"';?>>February</option>
-
-			<option value = "3" <?php if(isset($_POST['Month']) && $_POST['Month'] == '3')
-
-					echo ' selected="selected"';?>>March</option>
-
-			<option value = "4" <?php if(isset($_POST['Month']) && $_POST['Month'] == '4')
-
-					echo ' selected="selected"';?>>April</option>
-
-			<option value = "5" <?php if(isset($_POST['Month']) && $_POST['Month'] == '5')
-
-					echo ' selected="selected"';?>>May</option>
-
-			<option value = "6" <?php if(isset($_POST['Month']) && $_POST['Month'] == '6')
-
-					echo ' selected="selected"';?>>June</option>
-
-			<option value = "7" <?php if(isset($_POST['Month']) && $_POST['Month'] == '7')
-
-					echo ' selected="selected"';?>>July</option>
-
-			<option value = "8" <?php if(isset($_POST['Month']) && $_POST['Month'] == '8')
-
-					echo ' selected="selected"';?>>August</option>
-
-			<option value = "9" <?php if(isset($_POST['Month']) && $_POST['Month'] == '9')
-
-					echo ' selected="selected"';?>>September</option>
-
-			<option value = "10" <?php if(isset($_POST['Month']) && $_POST['Month'] == '10')
-
-					echo ' selected="selected"';?>>October</option>
-
-			<option value = "11" <?php if(isset($_POST['Month']) && $_POST['Month'] == '11')
-
-					echo ' selected="selected"';?>>November</option>
-
-			<option value = "12" <?php if(isset($_POST['Month']) && $_POST['Month'] == '12')
-
-					echo ' selected="selected"';?>>December</option>
-
+			    	endforeach;
+			    	/** Output the dropdown */
+			    	echo $options;
+				    echo '</select>'."\n\n";
+					endif;
+				?>
 		</select>
-
 		</td>
-
 		</tr>
 
 
 
 
 		<tr>
-
 		<td align = "right">Year:</td>
-
 		<td align = "left">
+		<select name = "Year" id = "Year" onchange="this.form.submit()" class = "yearlist">
+			<?php
 
-		<select name = "Year" id = "Year" onchange="this.form.submit()">
+				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
+				$fetch_year_name = $newdb->get_results('SELECT DISTINCT CAST(year AS UNSIGNED) AS year FROM state_rankings where year > 1989 ORDER BY CAST(year AS UNSIGNED) DESC;');
 
-			<option value = "2014" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2014')
-
-					echo ' selected="selected"';?>>2014</option>
-
-			<option value = "2013" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2013')
-
-					echo ' selected="selected"';?>>2013</option>
-
-			<option value = "2012" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2012')
-
-					echo ' selected="selected"';?>>2012</option>
-
-			<option value = "2011" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2011')
-
-					echo ' selected="selected"';?>>2011</option>
-
-			<option value = "2010" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2010')
-
-					echo ' selected="selected"';?>>2010</option>
-
-			<option value = "2009" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2009')
-
-					echo ' selected="selected"';?>>2009</option>
-
-			<option value = "2008" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2008')
-
-					echo ' selected="selected"';?>>2008</option>
-
-			<option value = "2007" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2007')
-
-					echo ' selected="selected"';?>>2007</option>
-
-			<option value = "2006" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2006')
-
-					echo ' selected="selected"';?>>2006</option>
-
-			<option value = "2005" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2005')
-
-					echo ' selected="selected"';?>>2005</option>
-
-			<option value = "2004" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2004')
-
-					echo ' selected="selected"';?>>2004</option>
-
-			<option value = "2003" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2003')
-
-					echo ' selected="selected"';?>>2003</option>
-
-			<option value = "2002" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2002')
-
-					echo ' selected="selected"';?>>2002</option>
-
-			<option value = "2001" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2001')
-
-					echo ' selected="selected"';?>>2001</option>
-
-			<option value = "2000" <?php if(isset($_POST['Year']) && $_POST['Year'] == '2000')
-
-					echo ' selected="selected"';?>>2000</option>
-
-			<option value = "1999" <?php if(isset($_POST['Year']) && $_POST['Year'] == '1999')
-
-					echo ' selected="selected"';?>>1999</option>
-
-			<option value = "1998" <?php if(isset($_POST['Year']) && $_POST['Year'] == '1998')
-
-					echo ' selected="selected"';?>>1998</option>
-
-			<option value = "1997" <?php if(isset($_POST['Year']) && $_POST['Year'] == '1997')
-
-					echo ' selected="selected"';?>>1997</option>
-
-			<option value = "1996" <?php if(isset($_POST['Year']) && $_POST['Year'] == '1996')
-
-					echo ' selected="selected"';?>>1996</option>
-
-			<option value = "1995" <?php if(isset($_POST['Year']) && $_POST['Year'] == '1995')
-
-					echo ' selected="selected"';?>>1995</option>
-
-			<option value = "1994" <?php if(isset($_POST['Year']) && $_POST['Year'] == '1994')
-
-					echo ' selected="selected"';?>>1994</option>
-
-			<option value = "1993" <?php if(isset($_POST['Year']) && $_POST['Year'] == '1993')
-
-					echo ' selected="selected"';?>>1993</option>
-
-			<option value = "1992" <?php if(isset($_POST['Year']) && $_POST['Year'] == '1992')
-
-					echo ' selected="selected"';?>>1992</option>
-
-			<option value = "1991" <?php if(isset($_POST['Year']) && $_POST['Year'] == '1991')
-
-					echo ' selected="selected"';?>>1991</option>
-
-			<option value = "1990" <?php if(isset($_POST['Year']) && $_POST['Year'] == '1990')
-
-					echo ' selected="selected"';?>>1990</option>
-
+				if(!empty($fetch_year_name)) :
+			    /** Loop through the $results and add each as a dropdown option */
+			    	$options = '';
+			    	foreach($fetch_year_name as $result) :
+			    		$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->year);
+			    	endforeach;
+			    	/** Output the dropdown */
+			    	echo $options;
+				    echo '</select>'."\n\n";
+					endif;
+				?>
 		</select>
 
 		</td>
@@ -597,6 +262,8 @@ get_header(); ?>
 	$type = "yoy";
 
 	}
+
+	$Month = date("n", strtotime($Month));
 
 
 

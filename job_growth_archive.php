@@ -101,7 +101,7 @@ get_header(); ?>
 		<td align = "right">Job Sector:</td>
 		<td align = "left">
 
-	<select name = "job_sector"  id = "job_select"  onchange = "this.form.submit()" class = "industrylist">
+		<select name = "job_sector"  id = "job_select"  onchange = "this.form.submit()" class = "industrylist">
 			<?php
 			    $value=$_POST["job_sector"];
 			    $table_name = '';

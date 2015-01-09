@@ -45,18 +45,10 @@ get_header(); ?>
 					]
 				});
     });
-</script>
-  <script>
-
-
 
        $(function(){
-
-	  $("#radio").buttonset();
-
-	});
-
-
+		$("#radio").buttonset();
+			       });
 
   </script>
 
