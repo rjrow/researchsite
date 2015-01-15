@@ -83,6 +83,7 @@ get_header(); ?>
 		<label for ="ann">Annual</label>
 
 
+
 	<br></br>
 
 	<table>
@@ -93,21 +94,42 @@ get_header(); ?>
 
 		<td align = "left">
 
-		<select name = "job_sector"  id = "job_select"  onchange = "this.form.submit()" class = "indust">
+		<select name = "job_sector"  id = "job_select" onchange="this.form.submit()" class = "industrylist">
+
 			<?php
 			    $value=$_POST["job_sector"];
 			    $table_name = '';
 
 			    $newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
 
-			    	$state_query = 'SELECT DISTINCT industry_name FROM state_rankings WHERE state_name = "Arizona" ORDER BY industry_name ASC;';
+			    	$state_query = 'SELECT DISTINCT industry_name as name FROM state_rankings WHERE state_name = "Arizona" ORDER BY
+			    					FIELD(name, "Total Nonfarm", "Total Private", "Government","Goods Producing",
+			    						"Manufacturing","Durable Goods","Fabricated Metal Product Manufacturing",
+			    						"Computer and Electronic Product Manufacturing","Aerospace Product and Parts Manufacturing",
+			    						"Non-Durable Goods","Metal Ore Mining","Mining and Logging","Construction",
+			    						"Construction of Buildings","Heavy and Civil Engineering Construction","Specialty Trade Contractors",
+			    						"Service-Providing","Private Service Providing","Trade, Transportation, and Utilities","Wholesale Trade","Retail Trade",
+			    						"Motor Vehicle and parts Dealers","Furniture and Home Furnishings Stores",
+			    						"Building Material and Garden Equipment and Supplies Dealers","Food and Beverage Stores",
+			    						"Clothing and Clothing Accessories Stores","General Merchandise Stores","Department Stores",
+			    						"Other General Merchandise Stores","Transportation and Warehousing","Air Transportation","Truck Transportation",
+			    						"Transportation and Utilities","Utilities","Information","Telecommunications","Financial Activities","Finance and Insurance",
+			    						"Credit Intermediation and Related Activities, and Monetary Authorities","Insurance Carriers and Related Activities, and Funds & Trusts",
+			    						"Securities, Commodity Contracts, and Other Financial Investments and Related Activities","Real Estate and Rental and Leasing",
+			    						"Professional and Business Services","Professional, Scientific, and Technical Services","Management of Companies and Enterprises",
+			    						"Administrative and Support and Waste Management and Remediation Services","Employment Services","Business Support Services",
+			    						"Services to Buildings and Dwellings","Education and Health Services","Educational Services","Health Care and Social Assistance",
+			    						"Ambulatory Health Care Services","Hospitals","Nursing and Residential Care Facilities","Social Assistance",
+			    						"Leisure and Hospitality","Arts, Entertainment, and Recreation","Accommodation and Food Services","Accommodation",
+			    						"Food Services and Drinking Places","Other Services","Government","Federal Government","State Government","State Government Educational Services",
+			    						"Local Government","Local Government Educational Services");';
 			    	$fetch_industry_name = $newdb->get_results($state_query);
 
 				if(!empty($fetch_industry_name)) :
 			    /** Loop through the $results and add each as a dropdown option */
 			    	$options = '';
 			    	foreach($fetch_industry_name as $result) :
-			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->industry_name);
+			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->name);
 			    	endforeach;
 			    	/** Output the dropdown */
 			    	echo $options;
@@ -115,17 +137,17 @@ get_header(); ?>
 					endif;
 				?>
 		</select>
-
 		</td>
-
 		</tr>
 
 
+
 		<tr>
-		<td class = "Month_id_field" align = "right">Month:</td>
-		<td class = "Month_id_field" align = "left">
-		<select name = "Month"  onchange = "this.form.submit()" class = "monthlist">
+		<td  class = "Month_id_field" align = "right">Month:</td>
+		<td  class = "Month_id_field" align = "left">
+		<select name = "Month" id = "Month" onchange="this.form.submit()" class = "monthlist">
 			<?php
+
 				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
 				$fetch_year_name = $newdb->get_results('SELECT DISTINCT CAST(Month AS UNSIGNED) AS Month FROM state_rankings ORDER BY CAST(Month AS UNSIGNED) ASC;');
 
@@ -148,10 +170,12 @@ get_header(); ?>
 		</tr>
 
 
+
+
 		<tr>
-		<td class = "Year_id_field" align = "right">Year:</td>
-		<td class = "Year_id_field" align = "left">
-		<select name = "Year"  onchange = "this.form.submit()" class = "yearlist">
+		<td align = "right">Year:</td>
+		<td align = "left">
+		<select name = "Year" id = "Year" onchange="this.form.submit()" class = "yearlist">
 			<?php
 
 				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
@@ -169,24 +193,30 @@ get_header(); ?>
 					endif;
 				?>
 		</select>
+
 		</td>
+
 		</tr>
+
 		</table>
+
 		<br></br>
+
+		<br></br>
+
 		<div style = "text-align:center">
+
 		</div>
+
 		</form>
+
+
+
 
 
 	<br></br>
 
-		<script type="text/javascript">
 
-		document.getElementsByClassName('monthlist').value = "<?php echo $_GET['monthlist'];?>";
-		document.getElementsByClassName('yearlist').value = "<?php echo $_GET['yearlist'];?>";
-		document.getElementsByClassName('industrylist').value = "<?php echo $_GET['industrylist'];?>";
-
-		</script>
 
 
 
@@ -249,8 +279,6 @@ get_header(); ?>
 	$type = "yoy";
 
 	}
-
-	$Month = date("n", strtotime($Month));
 
 
 
@@ -424,16 +452,12 @@ get_header(); ?>
 	}
 
 
-	$query = 'SELECT '.$col_state_name.', '.$col_rank.', FORMAT('.$col_pct_change.',2), FORMAT('.$col_job_growth.',2),
+
+	$rows = $newdb->get_results( 'SELECT '.$col_state_name.', '.$col_rank.', FORMAT('.$col_pct_change.',2), FORMAT('.$col_job_growth.',2),
 					FORMAT(value,2)
 					FROM '.$table.' WHERE industry_name = "'.$job_sector.'"
 					AND Year = "'.$Year.'"
-					AND Month = "'.$Month.'" ORDER BY '.$col_rank.';'
-
-
-	$rows = $newdb->get_results($query);
-
-	echo $query;
+					AND Month = "'.$Month.'" ORDER BY '.$col_rank.';');
 
 
 
