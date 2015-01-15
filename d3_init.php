@@ -170,7 +170,7 @@ map.legend();
 	d3.json("<?php bloginfo('template_url');?>/data/current_base_states_ts.json", function(error, csvdata1)
 	{
 		json = csvdata1;
-		console.log(json['2014']['1']['Construction']);
+		console.log(json);
 	});
 
 

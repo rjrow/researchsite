@@ -21,15 +21,16 @@ get_header(); ?>
 
 <!-- -->
 	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
 	
 	 <script type = "text/javascript">
 		jQuery(document).ready(function($) {
-	 
+
 	 	alert('JQuery loaded');
 	    // We'll pass this variable to the PHP function example_ajax_request
 	    var fruit = 'Banana';
 	    //var ajaxurl_1 = '<?php echo admin_url('admin-ajax.php'); ?>';
-	     
+
 	    // This does the ajax request
 	    $.ajax({
 	        url: "<?php echo admin_url('admin-ajax.php'); ?>",
@@ -46,15 +47,13 @@ get_header(); ?>
 	        	alert('error');
 	            console.log(errorThrown);
 	        }
+
 	    });  
-	              
+
 	});
 
 	</script>
 
-
-
-	<!-- --> 	
 
 	  <script type = "text/javascript">
 
