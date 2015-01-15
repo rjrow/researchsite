@@ -77,6 +77,7 @@ get_header(); ?>
 
 <div id="container" style="position: relative; width: 800px; height: 400px; margin:0 auto;"></div>
 <div id="chart5" ></div>
+<div id='line_chart1'></div>
 
 <script>
 
@@ -143,8 +144,9 @@ var map = new Datamap({
                 defaultFill: 'grey'},
     geographyConfig: {
             popupTemplate: function(geo, data) {
+            	var state = geo.properties.name;
                 if ( !data ) return;
-                return '<div class = "hoverinfo" ><strong>' +
+                return '<div class = "hoverinfo" onclick="showStats('+geo.properties.name+')";><strong>' +
                           '<p style = "text-align:center; font-weight: bolder; text-decoration: underline;">' +
                           geo.properties.name + '</p>' +
                          'Rank: ' + data.rank + '<br>' +

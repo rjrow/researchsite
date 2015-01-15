@@ -75,7 +75,8 @@ get_header(); ?>
 
 	echo $test;
 
-
+	$curr_year = date("Y"); 
+	$next_year = $curr_year + 1;
 
 
 
@@ -87,7 +88,7 @@ get_header(); ?>
 
 
 
-	echo '<caption> 2014 Forecasts Annual Percentage Change</caption>';
+	echo '<caption> '.$curr_year.' Forecasts Annual Percentage Change</caption>';
 
 	echo '<thead><tr>
 
@@ -159,7 +160,7 @@ get_header(); ?>
 
 
 
-	echo '<caption> 2015 Forecasts Annual Percentage Change</caption>';
+	echo '<caption> '.$next_year.' Forecasts Annual Percentage Change</caption>';
 
 	echo '<thead><tr><th></th>
 

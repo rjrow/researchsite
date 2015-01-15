@@ -38,7 +38,8 @@ frame_v3 = frame_v2[['supersector_name','state_codes','fillKey', 'rank', 'job_gr
 
 frame_v3.set_index(['supersector_name','state_codes'])
 
-file_location_json = "C:\\Users\\rjrow.ASURITE\\git\\researchsite\\Avada\\data\\current_base_states_ts.json"
+#file_location_json = "C:\\Users\\rjrow.ASURITE\\git\\researchsite\\Avada\\data\\current_base_states_ts.json"
+file_location_json = "C:\\Users\\naravind.ASURITE\\Desktop\\data_JSON\\current_base_states_ts.json";
 
 testdict = frame_v3.to_dict()
 
@@ -110,7 +111,33 @@ for year in years:
 
 
 
-json_object = json.dumps(outDictYear)
+json_object = json.dumps(outDictYear);
+
+
+
+#This is the code that creates tha data set for the line chart
+#Once we find a way to call py from php, we can move this to a new file
+#and thsi would return th ecreated array back to the php.
+#The imput parameters would come from the user's selection and onClick implemented in the php.
+
+industry_for_line_chart = 'Goods Producing';
+state_for_line_chart = 'WA';
+attribute_of_chart = 'rank';
+year_of_line_chart = '2014';
+
+
+line_data = [None]*(len(outDictMonth)+1);
+line_data[0] = 'WA Rankings';
+for month in outDictMonth:
+	line_data[int(month)] = outDictYear[year_of_line_chart][month][industry_for_line_chart][state_for_line_chart][attribute_of_chart];
+		
+
+
+print line_data;
+#This needs to be returned
+
+
+print 'Done';
 
 with open(file_location_json,'w') as outfile:
 	outfile.write(json_object)
