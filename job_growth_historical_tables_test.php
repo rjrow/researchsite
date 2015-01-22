@@ -19,40 +19,82 @@ get_header(); ?>
 
 	$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST); ?>
 
-<!-- -->
+
 	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 
-	
 	 <script type = "text/javascript">
-		jQuery(document).ready(function($) {
 
-	 	alert('JQuery loaded');
-	    // We'll pass this variable to the PHP function example_ajax_request
-	    var fruit = 'Banana';
-	    //var ajaxurl_1 = '<?php echo admin_url('admin-ajax.php'); ?>';
+	 var area_is_set = false;
 
-	    // This does the ajax request
-	    $.ajax({
-	        url: "<?php echo admin_url('admin-ajax.php'); ?>",
-	        data: {
-	            'action':'example_ajax_request',
-	            'fruit' : fruit
-	        },
-	        success:function(data) {
-	            // This outputs the result of the ajax request
-	            alert(data);
-	            console.log(data);
-	        },
-	        error: function(errorThrown){
-	        	alert('error');
-	            console.log(errorThrown);
-	        }
+	 $(document).ready(function(){
+	 	var area_set = document.getElementsByClassName('arealist')[0].value;
+	 	if(area_set!==""){
+	 		area_is_set = true;
+	 		get_industry_list(document.getElementsByClassName("arealist"));
+	 	}
+	 });
 
-	    });  
 
-	});
+	 	function get_industry_list(select_option){
+		 	
+		 	var selected_area;
+		 	var area_set = document.getElementsByClassName('arealist')[0].value;
 
-	</script>
+		 	if(area_is_set==true){
+		 		selected_area = area_set.substring(area_set.indexOf('[')+1, area_set.indexOf(']'));
+		 	}else{
+		 		selected_area = select_option.options[select_option.selectedIndex].value;
+		 		selected_area = selected_area.substring(selected_area.indexOf('[')+1, selected_area.indexOf(']'));
+		 	}
+
+
+
+		    $.ajax({
+		        url: "<?php echo admin_url('admin-ajax.php'); ?>",
+		        data: {
+		            'action':'get_insudtry_list_by_area',
+		            'area' : selected_area
+		        },
+		        success:function(data) {
+		        	var new_data = data.substring(1,data.length-1);
+		            var array = new_data.split("\",");
+					
+					$('#select_industry')
+						.find('option')
+						.remove()
+						.end();
+
+		            var selectIndustry = document.getElementById("select_industry");
+					for (var i = 0; i < array.length; i++){
+		            	var option = array[i];
+		            	option = option.substring(1, option.length);
+		            	option = option.replace("\\n","");
+		            	option = option.replace("\"","");
+		            	var element = document.createElement("option");
+		            	element.textContent = option;
+		            	element.value = option;
+		            	element.name = option;
+		            	selectIndustry.appendChild(element);
+		            }
+
+		            if(area_is_set==true){
+	    				document.getElementsByClassName('industrylist')[0].value = "<?php echo $_POST['industrylist'];?>";
+	    			}
+		            console.log(data);
+		        },
+		        error: function(errorThrown){
+		        	alert('error');
+		            console.log(errorThrown);
+		        }
+
+		    });
+
+	    }  
+
+
+
+
+	    </script>
 
 
 	  <script type = "text/javascript">
@@ -86,15 +128,15 @@ get_header(); ?>
 	<form class = "action_form" method = "POST">
 	<div id = "radio">
 		<span id = "radio_span">
-		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?>  onchange = "this.form.submit()">
+		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?>  ><!--onchange = "this.form.submit()"-->
 
 		<label for ="mom">1 month change</label>
 
-		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?>  onchange = "this.form.submit()">
+		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?>  ><!--onchange = "this.form.submit()"-->
 
 		<label for ="yoy">12 month change</label>
 
-		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?>  onchange = "this.form.submit()">
+		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ann') echo ' checked = "checked" ';?>  ><!--onchange = "this.form.submit()"-->
 
 		<label for ="ann">12 mos moving average</label>
 		</span>
@@ -131,7 +173,7 @@ get_header(); ?>
 			<tr class = "row_area">
 				<td> Area: </td>
 				<td id = "arealist">
-				<select name = "arealist" class = "arealist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
+				<select name = "arealist" class = "arealist" onchange="get_industry_list(this)" onclick = "javascript:checkMonthChange()"><!--onchange = "this.form.submit()" -->
 					<?PHP
 						$value=$_POST ["arealist"];
 						$value_area = $_POST ["arealist"];
@@ -175,39 +217,47 @@ get_header(); ?>
 		<tr class = "row_industry">
 			<td> Industry: </td>
 			<td>
-			<select name = "industrylist" class = "industrylist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
+			<select name = "industrylist" id="select_industry" class = "industrylist"  onclick = "javascript:checkMonthChange()" > <!-- onchange = "this.form.submit()"-->
 			<?php
 			    $value=$_POST["industrylist"];
 			    $table_name = '';
 
 			    $newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
 
-			    if($option_group[0] == 'States'){
-			    	$state_query = 'SELECT DISTINCT industry_name FROM state_rankings WHERE state_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
-			    	$fetch_industry_name = $newdb->get_results($state_query);
-			    }else if($option_group[0] == 'MSAs'){
-			    	$MSA_query = 'SELECT DISTINCT industry_name FROM msa_rankings WHERE area_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
-			    	$fetch_industry_name = $newdb->get_results($MSA_query);
-			    }
+			   /* if($option_group[0] == 'States'){
+			    	//$state_query = 'SELECT DISTINCT industry_name FROM state_rankings WHERE state_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
+			    	//$fetch_industry_name = $newdb->get_results($state_query);
+			    	echo '<script type = "text/javascript">get_industry_list("'.$area_selected[0].'");</script>';
 
-				if(!empty($fetch_industry_name)) :
+
+
+
+			    }else if($option_group[0] == 'MSAs'){
+			    	//$MSA_query = 'SELECT DISTINCT industry_name FROM msa_rankings WHERE area_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
+			    	//$fetch_industry_name = $newdb->get_results($MSA_query);
+			    	echo '<script type = "text/javascript">get_industry_list("'.$area_selected[0].'");</script>';
+
+			    }*/
+
+				//if(!empty($fetch_industry_name)) :
 			    /** Loop through the $results and add each as a dropdown option */
-			    	$options = '';
-			    	foreach($fetch_industry_name as $result) :
-			        	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->industry_name);
-			    	endforeach;
-			    	/** Output the dropdown */
-			    	echo $options;
-				    echo '</select>'."\n\n";
-					endif;
+			    //	$options = '';
+			    //	foreach($fetch_industry_name as $result) :
+			    //  	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->industry_name);
+			    //	endforeach;
+			    //	/** Output the dropdown */
+			    //	echo $options;
+				//  echo '</select>'."\n\n";
+				//	endif;
 				?>
+			</select>
 			</td>
 		</tr>
 
 		<tr class = "row_month">
 			<td> Month: </td>
 			<td>
-			<select name = "monthlist" class = "monthlist" onchange = "this.form.submit()" onclick = "javascript:checkMonthChange()">
+			<select name = "monthlist" class = "monthlist"  onclick = "javascript:checkMonthChange()"> <!--onchange = "this.form.submit()"-->
 			<?php
 			    $value=$_POST["monthlist"];
 
@@ -231,6 +281,11 @@ get_header(); ?>
 			</td>
 		</tr>
 		</table>
+		<br/>
+		<br/>
+		<center>
+			<input type = "button" value = "Submit" onclick = "this.form.submit()"/>
+		</center>
 		</form>
 	</div>
 
@@ -239,7 +294,7 @@ get_header(); ?>
 	<script type="text/javascript">
 	  document.getElementsByClassName('monthlist')[0].value = "<?php echo $_POST['monthlist'];?>";
 	  document.getElementsByClassName('arealist')[0].value = "<?php echo $_POST['arealist'];?>";
-	  document.getElementsByClassName('industrylist')[0].value = "<?php echo $_POST['industrylist'];?>";
+	  //document.getElementsByClassName('industrylist')[0].value = "<?php echo $_POST['industrylist'];?>";
 	  </script>
 
 	<?php

@@ -15,24 +15,31 @@ $DB_HOST = DB_HOST_jg;
 
 wp_enqueue_script("jquery");
 
-
-
-function testajax()
-{
-	$test = "test";
-	echo $test;
-	die();
-}
-add_action('wp_ajax_nopriv_testajax','testajax');
-
-
-
-
-
 add_action( 'wp_ajax_nopriv_areaSelectPopulate', 'areaSelectPopulate' );
 add_action('wp_ajax_areaSelectPopulate', 'areaSelectPopulate');
 add_action( 'wp_ajax_example_ajax_request', 'example_ajax_request' );
 add_action( 'wp_ajax_line_chart_request', 'line_chart_request' );
+add_action( 'wp_ajax_get_insudtry_list_by_area', 'get_insudtry_list_by_area' );
+
+
+function get_insudtry_list_by_area(){
+
+	if ( isset($_REQUEST) ) {
+		$area = $_REQUEST['area'];
+
+		$name = get_template_directory().'/data/areas.json';
+		$all_industries = json_decode(file_get_contents($name), true);
+
+		 if ($all_industries!=NULL){
+		 	$value_test = $all_industries[$area];
+		 	echo json_encode($value_test);
+		 }else{
+		 	echo 'Value is null';
+		 }
+
+	}
+	die();
+}
 
 
 function line_chart_request(){
@@ -48,25 +55,25 @@ function example_ajax_request() {
 
 	    // The $_REQUEST contains all the data sent via ajax
 	    if ( isset($_REQUEST) ) {
-	     
-	     	
+
+
 	        $fruit = $_REQUEST['fruit'];
-	        	         
+
 	        // Let's take the data that was sent and do something with it
 	        if ( $fruit == 'Banana' ) {
 	            $fruit = 'Apple';
 	        }
-	     
+
 	        // Now we'll return it to the javascript function
 	        // Anything outputted will be returned in the response
 	        echo $fruit;
-	         
+
 	        // If you're debugging, it might be useful to see what was sent in the $_REQUEST
 	        // print_r($_REQUEST);
-	     
+
 	    }
 
-	   	 die();    
+	   	 die();
    	}
 
 function areaSelectPopulate() {
