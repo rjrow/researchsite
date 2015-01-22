@@ -223,32 +223,7 @@ get_header(); ?>
 			    $table_name = '';
 
 			    $newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
-
-			   /* if($option_group[0] == 'States'){
-			    	//$state_query = 'SELECT DISTINCT industry_name FROM state_rankings WHERE state_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
-			    	//$fetch_industry_name = $newdb->get_results($state_query);
-			    	echo '<script type = "text/javascript">get_industry_list("'.$area_selected[0].'");</script>';
-
-
-
-
-			    }else if($option_group[0] == 'MSAs'){
-			    	//$MSA_query = 'SELECT DISTINCT industry_name FROM msa_rankings WHERE area_name = "'.$area_selected[0].'" ORDER BY industry_name ASC;';
-			    	//$fetch_industry_name = $newdb->get_results($MSA_query);
-			    	echo '<script type = "text/javascript">get_industry_list("'.$area_selected[0].'");</script>';
-
-			    }*/
-
-				//if(!empty($fetch_industry_name)) :
-			    /** Loop through the $results and add each as a dropdown option */
-			    //	$options = '';
-			    //	foreach($fetch_industry_name as $result) :
-			    //  	$options.= sprintf("\t".'<option value="%1$s">%1$s</option>'."\n", $result->industry_name);
-			    //	endforeach;
-			    //	/** Output the dropdown */
-			    //	echo $options;
-				//  echo '</select>'."\n\n";
-				//	endif;
+		   
 				?>
 			</select>
 			</td>
