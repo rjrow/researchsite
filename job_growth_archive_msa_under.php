@@ -67,19 +67,19 @@ get_header(); ?>
 
 	<div id = "radio">
 
-		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?> onchange="this.form.submit()">
+		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?> >
 
 		<label for ="mom">1 month change</label>
 
-		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?> onchange="this.form.submit()">
+		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?> >
 
 		<label for ="yoy">12 month change</label>
 
-		<input type = "radio" id = "ytd" value = "ytd" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ytd') echo ' checked = "checked" ';?> onchange = "this.form.submit()">
+		<input type = "radio" id = "ytd" value = "ytd" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ytd') echo ' checked = "checked" ';?> >
 
 		<label for ="ytd">Year to date</label>
 
-		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ann') echo ' checked = "checked" ';?> onchange = "this.form.submit()">
+		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ann') echo ' checked = "checked" ';?> >
 
 		<label for ="ann">Annual</label>
 
@@ -95,7 +95,7 @@ get_header(); ?>
 
 		<td align = "left">
 
-		<select name = "job_sector"  id = "job_select" onchange="this.form.submit()" class = "industrylist">
+		<select name = "job_sector"  id = "job_select" class = "industrylist">
 			<?php
 			    $value=$_POST["job_sector"];
 			    $table_name = '';
@@ -145,8 +145,9 @@ get_header(); ?>
 		<tr>
 		<td  class = "Month_id_field" align = "right">Month:</td>
 		<td  class = "Month_id_field" align = "left">
-		<select name = "Month" id = "Month" onchange="this.form.submit()">
+		<select name = "Month" id = "Month" class = "monthlist">
 			<?php
+			$value=$_POST["Month"];
 
 				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
 				$fetch_year_name = $newdb->get_results('SELECT DISTINCT CAST(Month AS UNSIGNED) AS Month FROM state_rankings ORDER BY CAST(Month AS UNSIGNED) ASC;');
@@ -175,8 +176,9 @@ get_header(); ?>
 		<tr>
 		<td align = "right">Year:</td>
 		<td align = "left">
-		<select name = "Year" id = "Year" onchange="this.form.submit()">
+		<select name = "Year" id = "Year" class = "yearlist">
 			<?php
+			$value=$_POST["Year"];
 
 				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
 				$fetch_year_name = $newdb->get_results('SELECT DISTINCT CAST(year AS UNSIGNED) AS year FROM state_rankings where year > 1989 ORDER BY CAST(year AS UNSIGNED) DESC;');
@@ -199,6 +201,9 @@ get_header(); ?>
 		<br></br>
 		<div style = "text-align:center">
 		</div>
+		<center>
+			<input type = "button" value = "Submit" onclick = "this.form.submit()"/>
+		</center>
 		</form>
 
 
@@ -209,9 +214,9 @@ get_header(); ?>
 
 	<script type="text/javascript">
 
-	document.getElementsByClassName('monthlist')[0].value = "<?php echo $_POST['monthlist'];?>";
-	document.getElementsByClassName('yearlist')[0].value = "<?php echo $_POST['yearlist'];?>";
-	document.getElementsByClassName('industrylist')[0].value = "<?php echo $_POST['industrylist'];?>";
+	document.getElementsByClassName('monthlist')[0].value = "<?php echo $_POST['Month'];?>";
+	document.getElementsByClassName('yearlist')[0].value = "<?php echo $_POST['Year'];?>";
+	document.getElementsByClassName('industrylist')[0].value = "<?php echo $_POST['job_sector'];?>";
 
 	</script>
 

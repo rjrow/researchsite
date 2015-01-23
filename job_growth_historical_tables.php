@@ -140,7 +140,7 @@ get_header(); ?>
 
 		<label for ="ann">12 mos moving average</label>
 		</span>
-	</div>
+	
 
 	<br></br>
 

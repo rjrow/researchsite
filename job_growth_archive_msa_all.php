@@ -66,19 +66,19 @@ get_header(); ?>
 
 	<div id = "radio">
 
-		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?>  onchange = "this.form.submit()">
+		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?> >
 
 		<label for ="mom">1 month change</label>
 
-		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?>  onchange = "this.form.submit()">
+		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?> >
 
 		<label for ="yoy">12 month change</label>
 
-		<input type = "radio" id = "ytd" value = "ytd" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ytd') echo ' checked = "checked" ';?> onchange = "this.form.submit()">
+		<input type = "radio" id = "ytd" value = "ytd" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ytd') echo ' checked = "checked" ';?> >
 
 		<label for ="ytd">Year to date</label>
 
-		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ann') echo ' checked = "checked" ';?> onchange = "this.form.submit()">
+		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ann') echo ' checked = "checked" ';?> >
 
 		<label for ="ann">Annual</label>
 
@@ -94,7 +94,7 @@ get_header(); ?>
 
 		<td align = "left">
 
-		<select name = "job_sector"  id = "job_select" onchange="this.form.submit()" class = "industrylist">
+		<select name = "job_sector"  id = "job_select" class = "industrylist">
 
 			<?php
 			    $value=$_POST["job_sector"];
@@ -145,7 +145,7 @@ get_header(); ?>
 		<tr>
 		<td  class = "Month_id_field" align = "right">Month:</td>
 		<td  class = "Month_id_field" align = "left">
-		<select name = "Month" id = "Month" onchange="this.form.submit()" class = "monthlist">
+		<select name = "Month" id = "Month" class = "monthlist">
 			<?php
 
 				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
@@ -175,7 +175,7 @@ get_header(); ?>
 		<tr>
 		<td align = "right">Year:</td>
 		<td align = "left">
-		<select name = "Year" id = "Year" onchange="this.form.submit()" class = "yearlist">
+		<select name = "Year" id = "Year" class = "yearlist">
 			<?php
 
 				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
@@ -207,6 +207,9 @@ get_header(); ?>
 		<div style = "text-align:center">
 
 		</div>
+		<center>
+			<input type = "button" value = "Submit" onclick = "this.form.submit()"/>
+		</center>
 
 		</form>
 

@@ -57,22 +57,22 @@ get_header(); ?>
 
 	<div id = "radio">
 
-		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?> onchange="this.form.submit()">
+		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?> >
 
 		<label for ="mom">1 month change</label>
 
-		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?> onchange="this.form.submit()">
+		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?> >
 
 		<label for ="yoy">12 month change</label>
 
-		<input type = "radio" id = "ytd" value = "ytd" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ytd') echo ' checked = "checked" ';?> onchange="this.form.submit()">
+		<input type = "radio" id = "ytd" value = "ytd" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ytd') echo ' checked = "checked" ';?> >
 
 		<label for ="ytd">Year to date</label>
 
-		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ann') echo ' checked = "checked" ';?> onchange="this.form.submit()">
+		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ann') echo ' checked = "checked" ';?> >
 
 		<label for ="ann">Prior Year</label>
-
+	
 
 	<br></br>
 
@@ -81,7 +81,7 @@ get_header(); ?>
 	<tr>
 	<td align = "right">Job Sector:</td>
 	<td align = "left">
-	<select name = "job_sector"  id = "job_select" name = "job_selection" class = "jobselection"  onchange="this.form.submit()">
+	<select name = "job_sector"  id = "job_select" name = "job_selection" class = "jobselection" > <!-- onchange="this.form.submit()"-->
 			<?php
 			    $value=$_POST["job_sector"];
 			    $table_name = '';
@@ -127,18 +127,21 @@ get_header(); ?>
 	</tr>
 	</table>
 	</div>
-	</div>
+	
 
 		<br></br>
 		<div style = "text-align:center">
 		</div>
 
+		<center>
+			<input type = "button" value = "Submit" onclick = "this.form.submit()"/>
+		</center>
 	</form>
 
 	<br></br>
 
 	<script type="text/javascript">
-	  document.getElementsByClassName('jobselection')[0].value = "<?php echo $_POST['jobselection'];?>";
+	  document.getElementsByClassName('jobselection')[0].value = "<?php echo $_POST['job_sector'];?>";
 	</script>
 
 
