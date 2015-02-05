@@ -23,10 +23,20 @@ get_header(); ?>
   </script>
 
 <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-<script type ="text/javascript" src="<?php bloginfo('template_url'); ?>/js/hide_selects.js"></script>
+<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/hide_selects.js"></script>
 <script type ="text/javascript" src="//cdn.datatables.net/plug-ins/a5734b29083/sorting/numeric-comma.js"></script>
 <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.2/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="dataTables.numericComma.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	if(document.getElementById('mom').checked){
+	    		document.getElementsByClassName('industrylist')[0].value = "Total Nonfarm";
+	    		document.getElementsByClassName('industrylist')[0].disabled = true;
+	 }
+});
+
+</script>
 
  <script type="text/javascript">
     $(document).ready(function() {
@@ -58,6 +68,18 @@ get_header(); ?>
 					]
 				});
     });
+
+    function disableJobsector(){
+		document.getElementsByClassName('industrylist')[0].value = "Total Nonfarm";
+    	document.getElementsByClassName('industrylist')[0].disabled = true;
+    }
+
+    function enableJobsector(){
+		document.getElementsByClassName('industrylist')[0].value = "";
+    	document.getElementsByClassName('industrylist')[0].disabled = false;
+    }
+
+
  </script>
 
 
@@ -66,19 +88,19 @@ get_header(); ?>
 
 	<div id = "radio">
 
-		<input type = "radio" id = "mom" value = "mom" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" ';?> >
+		<input type = "radio" class = "mom" id = "mom" value = "mom" name = "radio"  onchange = "disableJobsector()" <?php if (isset($_POST['radio']) && $_POST['radio'] == 'mom') echo ' checked = "checked" '; ?> >
 
 		<label for ="mom">1 month change</label>
 
-		<input type = "radio" id = "yoy" value = "yoy" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?> >
+		<input type = "radio" id = "yoy" value = "yoy" name = "radio" onchange = "enableJobsector()" <?php if (isset($_POST['radio']) && $_POST['radio'] == 'yoy') echo ' checked = "checked" ';?> >
 
 		<label for ="yoy">12 month change</label>
 
-		<input type = "radio" id = "ytd" value = "ytd" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ytd') echo ' checked = "checked" ';?> >
+		<input type = "radio" id = "ytd" value = "ytd" name = "radio" onchange = "enableJobsector()" <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ytd') echo ' checked = "checked" ';?> >
 
 		<label for ="ytd">Year to date</label>
 
-		<input type = "radio" id = "ann" value = "ann" name = "radio"  <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ann') echo ' checked = "checked" ';?> >
+		<input type = "radio" id = "ann" value = "ann" name = "radio" onchange = "enableJobsector()" <?php if (isset($_POST['radio']) && $_POST['radio'] == 'ann') echo ' checked = "checked" ';?> >
 
 		<label for ="ann">Annual</label>
 
@@ -147,6 +169,7 @@ get_header(); ?>
 		<td  class = "Month_id_field" align = "left">
 		<select name = "Month" id = "Month" class = "monthlist">
 			<?php
+				$value=$_POST["Month"];
 
 				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
 				$fetch_year_name = $newdb->get_results('SELECT DISTINCT CAST(Month AS UNSIGNED) AS Month FROM state_rankings ORDER BY CAST(Month AS UNSIGNED) ASC;');
@@ -177,6 +200,7 @@ get_header(); ?>
 		<td align = "left">
 		<select name = "Year" id = "Year" class = "yearlist">
 			<?php
+				$value=$_POST["Year"];
 
 				$newdb = new wpdb($DB_USER, $DB_PASS, $DB_NAME, $DB_HOST);
 				$fetch_year_name = $newdb->get_results('SELECT DISTINCT CAST(year AS UNSIGNED) AS year FROM state_rankings where year > 1989 ORDER BY CAST(year AS UNSIGNED) DESC;');
@@ -214,6 +238,11 @@ get_header(); ?>
 		</form>
 
 
+		<script type="text/javascript">
+	  		document.getElementsByClassName('monthlist')[0].value = "<?php echo $_POST['Month'];?>";
+	  		document.getElementsByClassName('yearlist')[0].value = "<?php echo $_POST['Year'];?>";
+	  		document.getElementsByClassName('industrylist')[0].value = "<?php echo $_POST['job_sector'];?>";
+		</script>
 
 
 
@@ -259,6 +288,7 @@ get_header(); ?>
 
 	{
 
+		
 	$job_sector = $_POST['job_sector'];
 
 	$Year = $_POST['Year'];
@@ -272,7 +302,6 @@ get_header(); ?>
 	else
 
 	{
-
 	$job_sector = "Total Nonfarm";
 
 	$Year = (int)$Year_in[0];
@@ -284,21 +313,25 @@ get_header(); ?>
 	}
 
 
-
+	$Month = date("n", strtotime($Month));
 
 
 	if($type == "mom")
 
 	{
 
-
-
+		
 	$type_out = "1 month change";
 
 	$table = msa_rankings_mom_t;
 
 	$table_us = national_rankings_mom_t;
 
+	//Defaulting to Total Nonfarm since data not available -- 29/01/2015
+
+	$job_sector = "Total Nonfarm";
+
+	//--- end
 
 
 	$col_state_name = area_name;
@@ -327,6 +360,7 @@ get_header(); ?>
 	} else
 
 	{
+
 	$Last_Year  = $This_Year;
 	}
 
@@ -344,7 +378,6 @@ get_header(); ?>
 	elseif ($type == "yoy")
 
 	{
-
 
 
 	$type_out = "12 month change";
@@ -416,8 +449,6 @@ get_header(); ?>
 	else
 
 	{
-
-
 
 	$Month_in = $newdb->get_row('SELECT month FROM date_ref_t',ARRAY_N);
 	$Year_in  = $newdb->get_row('SELECT year FROM date_ref_t',ARRAY_N);

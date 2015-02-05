@@ -20,23 +20,26 @@ add_action('wp_ajax_areaSelectPopulate', 'areaSelectPopulate');
 add_action( 'wp_ajax_example_ajax_request', 'example_ajax_request' );
 add_action( 'wp_ajax_line_chart_request', 'line_chart_request' );
 add_action( 'wp_ajax_get_insudtry_list_by_area', 'get_insudtry_list_by_area' );
+add_action( 'wp_ajax_nopriv_get_insudtry_list_by_area', 'get_insudtry_list_by_area' );
 
 
 function get_insudtry_list_by_area(){
-
+	
 	if ( isset($_REQUEST) ) {
 		$area = $_REQUEST['area'];
-
+		
 		$name = get_template_directory().'/data/areas.json';
 		$all_industries = json_decode(file_get_contents($name), true);
-
+		
 		 if ($all_industries!=NULL){
-		 	$value_test = $all_industries[$area];
+		  	$value_test = $all_industries[$area];
 		 	echo json_encode($value_test);
 		 }else{
 		 	echo 'Value is null';
 		 }
 
+	}else{
+		echo '$_REQUEST not set';
 	}
 	die();
 }

@@ -291,7 +291,7 @@ get_header(); ?>
 					AND Month = "'.$Month.'"  UNION ALL
 					      SELECT '.$col_state_name.', rank, FORMAT('.$col_pct_change.',2),
 						FORMAT('.$col_job_growth.',2), FORMAT('.$col_value.',2)
-						FROM '.$table_us.' WHERE industry_name = "'.$job_sector.'"
+						FROM '.$table_us.' WHERE industry_name = "'.$job_sector.'" AND industry_name <=> supersector_name
 						AND Year = "'.$Year.'"
 						AND Month = "'.$Month.'";');
 
