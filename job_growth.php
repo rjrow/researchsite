@@ -73,6 +73,7 @@ get_header(); ?>
 
 		<label for ="ann">Prior Year</label>
 	
+	<script type="text/javascript">document.getElementById('yoy').checked = true;</script>
 
 	<br></br>
 

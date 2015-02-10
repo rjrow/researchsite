@@ -58,7 +58,7 @@ get_header(); ?>
 		        success:function(data) {
 		        	var new_data = data.substring(1,data.length-1);
 		            var array = new_data.split("\",");
-					
+					 
 					$('#select_industry')
 						.find('option')
 						.remove()
@@ -141,7 +141,7 @@ get_header(); ?>
 		<label for ="ann">12 mos moving average</label>
 		</span>
 	
-
+	<script type="text/javascript">document.getElementById('yoy').checked = true;</script>
 	<br></br>
 
 	<div id = "form_list">
@@ -173,7 +173,7 @@ get_header(); ?>
 			<tr class = "row_area">
 				<td> Area: </td>
 				<td id = "arealist">
-				<select name = "arealist" class = "arealist" onchange="get_industry_list(this)" onclick = "javascript:checkMonthChange()"><!--onchange = "this.form.submit()" -->
+				<select name = "arealist" class = "arealist" onchange="get_industry_list(this)" >
 					<?PHP
 						$value=$_POST ["arealist"];
 						$value_area = $_POST ["arealist"];
@@ -217,7 +217,7 @@ get_header(); ?>
 		<tr class = "row_industry">
 			<td> Industry: </td>
 			<td>
-			<select name = "industrylist" id="select_industry" class = "industrylist"  onclick = "javascript:checkMonthChange()" > <!-- onchange = "this.form.submit()"-->
+			<select name = "industrylist" id="select_industry" class = "industrylist" > 
 			<?php
 			    $value=$_POST["industrylist"];
 			    $table_name = '';
@@ -232,7 +232,7 @@ get_header(); ?>
 		<tr class = "row_month">
 			<td> Month: </td>
 			<td>
-			<select name = "monthlist" class = "monthlist"  onclick = "javascript:checkMonthChange()"> <!--onchange = "this.form.submit()"-->
+			<select name = "monthlist" class = "monthlist" > 
 			<?php
 			    $value=$_POST["monthlist"];
 

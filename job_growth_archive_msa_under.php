@@ -83,6 +83,7 @@ get_header(); ?>
 
 		<label for ="ann">Annual</label>
 
+		<script type="text/javascript">document.getElementById('yoy').checked = true;</script>
 
 
 	<br></br>
